@@ -1,0 +1,98 @@
+ <!--index.wxml-->
+<view class="head" style='height:{{navH}}px'>
+  <image mode="scaleToFill" src="../../images/logo@2x.png"></image>
+  <text>火龙果国际教育论坛</text>
+</view>
+<view class="bgColor">
+  <van-search
+    value="{{ inputValue }}"
+    placeholder="请输入搜索关键词"
+    bind:change="bindinput"
+    bind:search="bindSearch"
+    placeholder-style="font-size:16px;margin-left:8px;rgb(128,128,128)"
+  > 
+  </van-search>
+  <view class="oneSwiperPart">
+    <swiper autoplay="true" next-margin="35px" circular="true">
+        <swiper-item wx:for="{{homeConfigList}}" data-cardid="{{item.content02}}" bindtap="enterCard">
+          <view style="background-image:url({{item.content01}});">
+            <text>{{item.content03}}</text>
+          </view>
+        </swiper-item>
+    </swiper>
+  </view>
+  <!-- <view class="notice" bindtap="toNotice">
+    <image class="noticeIcon" src="../../images/video.png" />
+    <text class="noticeContent">越姐麻辣说&火龙果公益讲座 视频回放</text>
+    <text class="enterIcon iconfont icon-right"></text>
+  </view> -->
+  <view class="Istop" wx:for="{{topList}}" data-detailid="{{item.itemId}}" bindtap="hotDetails">
+    <text class="buttonBg istopTitle">置顶</text>
+    <text class="topPostTitle">{{item.title}}</text>
+    <view class="topPostData">
+      <text>浏览 {{item.watchNum}}</text>
+      <text>评论 {{item.commentNum}}</text>
+    </view>
+  </view>
+</view>
+<view class="index_main">
+  <view class="chooseTab">
+    <van-tabs color="rgba(255,100,100,1)" active="{{active}}" line-width="60" bind:click="chooseAll" swipeable>
+      <van-tab  wx:for="{{indexTitle}}" wx:key="*this" title="{{item.postName}}" class="tab-index--van-tab__pane">
+          <text class="tabName {{showId == item.id ? 'indexButton' : ''}}"  wx:for="{{item.categoryItem}}" wx:key="*this" bindtap="toTabDetail" data-listid="{{item.id}}">{{item.categoryName}}</text>
+      </van-tab>
+    </van-tabs>
+  </view>
+</view>
+<!-- 类目帖子 -->
+ <view class="newInvitation {{isChoose?'show':'hide'}}" > 
+    <view class="newInvitation-list-one" wx:for="{{postHead}}" wx:key="*this" data-detailid="{{item.itemId}}" bindtap="hotDetails" wx:key="*this">
+      <view class="newInvitation-content-title">{{item.title}}</view>
+      <view class="newInvitation-content">
+        <view class="left-content {{item.postIcon==null || item.postIcon==''? 'widthLong':''}}">
+          <view class="mine">
+            <view class="mine-imgIcon">
+              <image mode="scaleToFill" src="{{item.avatar}}" wx:if="{{item.avatar}}" class="head-image"/>
+              <image class="{{item.gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+            </view>
+            <text>{{item.nickName}}</text>
+          </view>
+          <view class="summaryDesc {{item.postIcon==null ? 'widthLong':'widthShort'}}">{{item.summaryDesc}}</view>
+        </view>
+        <image mode="scaleToFill" src="{{item.postIcon}}" wx:if="{{item.postIcon}}" class="content-image {{item.postIcon==null || item.postIcon==''?'widthimg':''}}" />
+      </view>
+      <view class="comment">
+        <text class="publishTime">{{item.createTime}}</text>
+        <text style="margin-left: 15px;" class="commentNum">阅读 {{item.watchNum}}</text>
+        <van-icon name="chat-o" class="commentIcon" />
+        <text class="commentNum">{{item.commentNum}}</text>
+      </view>
+    </view>
+</view>
+<!-- 全部帖子 -->
+<view class="newInvitation {{isShow?'show':'hide'}}"> 
+  <view class="newInvitation-list-one" wx:for="{{newList}}" data-detailid="{{item.itemId}}" bindtap="hotDetails" wx:key="*this">
+    <view class="newInvitation-content-title">{{item.title}}</view>
+    <view class="newInvitation-content">
+      <view class="left-content {{item.postIcon==null || item.postIcon==''? 'widthLong':''}}">
+        <view class="mine">
+          <view class="mine-imgIcon">
+            <image mode="scaleToFill" src="{{item.avatar}}" wx:if="{{item.avatar}}" class="head-image"/>
+            <image class="{{item.gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+          </view>
+          <text>{{item.nickName}}</text>
+        </view>
+        <view class="summaryDesc">{{item.summaryDesc}}</view>
+      </view>
+      <image mode="scaleToFill" src="{{item.postIcon}}" wx:if="{{item.postIcon}}" class="content-image {{item.postIcon==null || item.postIcon==''?'widthimg':''}}" />
+    </view>
+    <view class="comment">
+      <text class="publishTime">{{item.createTime}}</text>
+      <text style="margin-left: 15px;" class="commentNum">阅读 {{item.watchNum}}</text>
+      <van-icon name="chat-o" class="commentIcon" />
+      <text class="commentNum">{{item.commentNum}}</text>
+    </view>
+  </view>
+</view>
+<view class="{{searchNull?'isNull':'hide'}}">暂无内容，请更换搜索词！</view>
+<van-loading class="{{loadMore ? 'show':'hide'}}" />

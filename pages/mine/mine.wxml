@@ -1,0 +1,83 @@
+<!--mine.wxml-->
+<view class="title-Bg">
+</view>
+<view class='mine'>
+  <view  class='mine-center'>
+    <view bindtap="materials"  class='mine-center-top'>
+       <view class="mine-imgIcon">
+         <image class="mine-img" src="{{avatarUrl}}"/>
+         <image class="{{gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+       </view>
+       <text>{{nickName}}</text>
+       <view class="modify">修改个人资料<van-icon class="modify-icon" name="edit" /></view>
+    </view>
+    <view class="integral">       
+      <view class="dialog" bindtap="dialogBtn">积分 {{score}}分<van-icon class="dialog-icon" name="info-o"/></view> 
+      <van-popup 
+        show="{{ show }}" 
+        closeable 
+        round 
+        bind:close="onClose" 
+        class="popup" 
+      > 
+        <view class="popupTitle">积分规则</view> 
+        <view>每日登陆 <text>1分</text></view> 
+        <view>发布帖子 <text>5分</text></view> 
+        <view>转发帖子 <text>3分</text></view> 
+        <view>评论帖子 <text>1分</text></view> 
+      </van-popup> 
+    </view> 
+    <view class='mine-center-bttom'>
+      <view bindtap="post" class="post">
+          <text class="num">{{post}}</text>
+          <text>贴子</text>
+      </view>
+      <view class='xian'>|</view>
+      <view bindtap="follow" class="post">
+          <text class="num">{{follow}}</text>
+          <text>关注</text>
+      </view>
+      <view class='xian'>|</view>
+      <view bindtap="collection" class="post">
+          <text class="num">{{collection}}</text>
+          <text>收藏</text>
+      </view>
+      <view class='xian'>|</view>
+      <view bindtap="fans" class="post">
+          <text class="num">{{fans}}</text>
+          <text>粉丝</text>
+      </view>
+    </view>
+  </view>
+  <view class="mine-list">
+    <view bindtap="post" class="mine-post">
+     <text>帖子</text>
+     <image class="icon" src="../../images/post.png"/>
+    </view>
+    <view bindtap="follow" class="mine-post">
+     <text>关注</text>
+    <image class="icon" src="../../images/follow.png"/>
+    </view>
+    <view bindtap="collection" class="mine-post">
+     <text>收藏</text>
+     <image class="icon" src="../../images/collection.png"/>
+    </view>
+    <view bindtap="homepage" class="mine-post">
+     <text>我的主页</text>
+     <image class="icon" src="../../images/homepage.png"/>
+    </view>
+    <view wx:if="{{gradeSign == 5}}">
+      <view class="mine-post">
+        <text>我的VIP</text>
+        <image class="icon" src="../../images/apply.png"/>
+      </view>
+    </view>
+    <view wx:else>
+      <view bindtap="apply" class="mine-post">
+       <text>申请VIP认证</text>
+       <image class="icon" src="../../images/apply.png"/>
+      </view>
+    </view>
+  </view>
+  <view bindtap="mineBtn" class="mine-btn">-火龙果国际教育论坛5.10-</view>
+</view>

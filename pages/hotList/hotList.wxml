@@ -1,0 +1,54 @@
+<view class="title-Bg">
+</view>
+<view class="newInvitation">
+  <view class="newInvitation-hot" bindtap="hot">
+    <view class="newInvitation-hotBg">
+      <view class="newInvitation-hotBg-title">{{hotBg.title}}</view>
+      <view class="newInvitation-hotBg-content">
+        <view  class="hotBg-left-content {{hotBg.postIcon==null || hotBg.postIcon==''? 'widthLong':''}}">
+          <view class="left-summaryDesc">{{hotBg.summaryDesc}}</view>
+          <view class='mine-one'>
+            <view class="mine-imgIcon-one">
+              <image src="{{hotBg.avatar}}" class="hotBg-image"/>
+              <image class="{{hotBg.gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+            </view>
+            <text>{{hotBg.nickName}}</text>
+            <text>阅读 {{hotBg.watchNum}}</text>
+            <text>评论 {{hotBg.commentNum}}</text>
+          </view>
+        </view>
+        <image mode="scaleToFill" src="{{hotBg.postIcon}}" class="hotBg-content-image {{hotBg.postIcon==null || hotBg.postIcon==''? 'widthimg':''}}" />
+      </view>
+      <view class="xian"></view>
+      <view class="reply" wx:for="{{hot}}">
+        <text class="reply-one">{{item.content}}</text>
+        <text class="reply-two">{{item.sonCommentsNum}}  回复</text>
+      </view>
+    </view>
+  </view>
+  <view bindtap="hotDetails" data-detailid="{{item.itemId}}" class="newInvitation-list-one" wx:for="{{hotList}}">
+    <view class="newInvitation-content-title">{{item.title}}</view>
+    <view class="newInvitation-content">
+      <view  class="left-content {{item.postIcon==null || item.postIcon==''? 'widthLong':''}}">
+        <view class="mine">
+          <view class="mine-imgIcon">
+            <image mode="scaleToFill" src="{{item.avatar}}" wx:if="{{item.avatar}}" class="head-image"/>
+            <image class="{{item.gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+          </view>
+          <text>{{item.nickName}}</text>
+        </view>
+        <view class="summaryDesc">{{item.summaryDesc}}</view>
+      </view>
+      <image mode="scaleToFill" src="{{item.postIcon}}" class="content-image {{item.postIcon==null || item.postIcon==''?'widthimg':''}}" />
+    </view>
+    <view class="comment">
+      <text class="publishTime">{{item.createTime}}</text>
+      <text style="margin-left: 15px;" class="commentNum">阅读 {{item.watchNum}}</text>
+      <van-icon name="chat-o" class="commentIcon" />
+      <text class="commentNum">{{item.commentNum}}</text>
+    </view>
+  </view>
+</view>
+<van-loading class="{{loadMore ? 'show':'hide'}}">加载中...</van-loading>
+
+  

@@ -1,0 +1,103 @@
+<!--pages/followHomePage/followHomePage.wxml-->
+<view class="topPart">
+  <view class="avar">
+   <image class="mine-img" src="{{userMessage.wechatPortrait}}"/>
+   <image class="{{userMessage.gradeSign == 5?'mine-icon':'hide'}}" src="../../images/VIP.png"/>
+  </view>
+  <view>
+    <text class="focusOnWhite">{{follow}}</text> 
+    <text class="name">{{userMessage.nickname}}</text>
+    <text class="focusOn buttonBg" data-openid="{{followOpenId}}" data-title="{{follow}}" bindtap="follow">{{follow}}</text> 
+  </view>
+  <view class="signature" wx:if="{{userMessage.slogan=='null'|| userMessage.slogan==null}}">暂无签名</view>
+  <view class="signature" wx:else>{{userMessage.slogan}}</view>
+</view>
+
+<van-tabs active="0" bind:change="onChangeTab">
+  <van-tab title="文章">
+    <view wx:if="{{postList!=''}}">
+      <view class="newInvitation" wx:for="{{postList}}" data-postid="{{item.itemId}}" bindtap="postDetail"> 
+        <view class="newInvitation-list-one">
+          <view class="newInvitation-content-title">{{item.title}}</view>
+          <view class="newInvitation-content">
+            <view class="left-content {{item.postIcon==null || item.postIcon==''? 'widthLong':''}}" >
+              <image src="{{item.avatar}}" class="head-image"/>
+              <text>{{item.nickName}}</text>
+              <view class="summaryDesc">{{item.summaryDesc}}</view>
+            </view>
+            <image src="{{item.postIcon}}"  wx:if="{{item.postIcon}}" class="content-image {{item.postIcon==null || item.postIcon==''?'widthimg':''}}" />
+          </view>
+          <view class="comment">
+            <text class="publishTime">{{item.createTime}}</text>
+            <van-icon name="chat-o" class="commentIcon" />
+            <text class="commentNum">{{item.commentNum}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+     <view wx:else class="noPost">暂无帖子</view>
+  </van-tab>
+  <van-tab title="回答">
+    <view wx:if="{{commentList!=''}}">
+      <view class="commentPart" wx:for="{{commentList}}" data-postid="{{item.objectId}}" bindtap="postDetail">
+        <view class="cardLine">
+          <view><image src="{{item.portrait}}"></image></view>
+          <view><text class="summaryDesc">{{item.content}}</text></view>
+        </view>
+        <view class="comment">
+          <text class="publishTime">{{item.createTime}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="noComment">暂无回答</view>
+  </van-tab>
+  <view wx:if="{{userMessage.gradeSign == 5}}">
+    <van-tab title="提问">
+      <view wx:if="{{askList!=''}}">
+        <view class='hotDetails-main'>
+          <view  wx:for="{{askList}}"   class='hotDetails-main-list'>
+            <view class='hotDetails-main-list-top'>
+                <image src="{{item.messagePortrait}}"/>
+                <view class="hotDetails-main-name">
+                  <view class="name">{{item.messageName}}</view>
+                  <view class="time">{{item.createTime}}</view>
+                </view>
+            </view>
+            <view class='hotDetails-main-list-bottom' >
+              {{item.messageContent}}
+            </view>
+            <view class="{{footactive?'hotDetails-main-list-icon-allCommentsShow':'hide'}}">
+              <view bindtap="editorShowTwo" data-listid="{{item.id}}" data-listname="{{item.messageName}}"
+              class="{{item.id == listidShow?'allCommentsHide':'hotDetails-main-list-icon'}}">
+              <van-icon name="chat-o"/>
+              </view>
+            </view>
+            <view class="{{item.id == listidShow?'textarea-wrp':'textarea-wrpHide'}}">
+              <input bindinput="bindKeyInput" value="{{inputValue}}"   placeholder="回答 {{objectName}}"/>
+              <button loading="{{loading1}}" disabled="{{disabled1}}" bindtap="getcontentTwo" class="textarea-wrp-btn"> 回答 </button>
+            </view>
+            <view class="{{item.AnswerList == ''?'hide':'xian'}}"></view>
+              <view  wx:for="{{item.AnswerList}}"  wx:for-item="AnswerList"  class='hotDetails-main-list hotDetails-two'>
+                <view class='hotDetails-main-list-top'>
+                    <image src="{{AnswerList.messagePortrait}}"/>
+                    <view class="hotDetails-main-name">
+                      <view class="name">{{AnswerList.messageName}}</view>
+                      <view class="time">{{AnswerList.createTime}}</view>
+                    </view>
+                </view>
+                <view class='hotDetails-main-list-bottom' >
+                  {{AnswerList.messageContent}}
+                </view>
+              </view>
+          </view>
+        </view>
+      </view>
+      <view wx:else class="noComment">暂无回答</view>
+      <view class="{{footactive?'hide':'footInput'}}">
+        <input bindinput="getcontentValue" value="{{getcontentValue}}" cursor-spacing="18px"   placeholder="友善的提问"/>
+        <button type="warn" loading="{{loading}}" disabled="{{disabled}}" bindtap="getcontent"  class="textarea-wrp-btn buttonBg"> 提问 </button>
+      </view>
+    </van-tab>
+  </view>
+</van-tabs>
+<van-loading class="{{loadMore ? 'show':'hide'}}"></van-loading>
